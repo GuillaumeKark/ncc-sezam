@@ -6,7 +6,7 @@ import pandas as pd
 from gensim.models import LdaMulticore
 from gensim.corpora.dictionary import Dictionary
 from sklearn.feature_extraction.text import CountVectorizer
-from . import utils as utils
+from .utils import project_utils as utils
 
 # Your local path here...
 PATH_TO_CSV = ""
