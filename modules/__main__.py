@@ -47,10 +47,11 @@ def predict():
     found_title["topics"] += found_text["topics"]
     found_title["words"] = found_title["words"].apply(lambda x: list(set(x)))
     found_title["topics"] = found_title["topics"].apply(lambda x: list(set(x)))
+    
     # Save an output table
-    pd.concat([corpus)
-
-
+    output_dataset = pd.concat([corpus, found_title], axis=1)
+    output_dataset.to_parquet("C:/Users/karkl/Desktop/NCC/datasets/output.parquet")
+    
 if __name__ == "__main__":
     point_predict()
     predict()
