@@ -5,18 +5,20 @@ This file implements different preprocessing utils functions.
 import pandas as pd
 import re
 from stopwords import stopwords_nltk, stopwords_specific
+import spacy
+import unicodedata
 
-
-def preprocess_string(input_string):
+def preprocess_string(nlp, input_string):
     """
     Wraps all operations to ensure common normalization.
     """
     processed_string = input_string.lower()
     processed_string = special_structures(processed_string)
-    processed_string = remove_stopwords(processed_string)
+    #NA for match processed_string = remove_stopwords(processed_string)
     processed_string = replace_digit(processed_string)
     processed_string = remove_trailings(processed_string)
-
+    processed_string = strip_accents(processed_string)
+    processed_string = lemmatize(nlp, processed_string)
     return processed_string
 
 
@@ -24,6 +26,14 @@ def preprocess_string(input_string):
 """Sub-functions"""
 """#############"""
 
+def lemmatize(nlp, input_string):
+    """
+    Lemmatizes an input string
+    """
+    # Can use spacy pipeline to increase speed
+    doc = nlp(input_string)
+    return " ".join([token.lemma_ for token in doc])
+    
 
 def remove_stopwords(input_string):
     """
@@ -57,7 +67,6 @@ def special_structures(input_string):
     Replace some special structures by space.
     """
     input_string = input_string.replace("'", " ")
-    input_string = input_string.replace("-", " ")
     input_string = input_string.replace("(", " ")
     input_string = input_string.replace(")", " ")
     input_string = input_string.replace("1er ", " ")
@@ -68,7 +77,22 @@ def special_structures(input_string):
 
     return output_string
 
+def strip_accents(text):
+    """
+    Removes accents.
+    """
+    try:
+        text = unicode(text, 'utf-8')
+    except NameError: # unicode is a default on python 3 
+        pass
 
+    text = unicodedata.normalize('NFD', text)\
+           .encode('ascii', 'ignore')\
+           .decode("utf-8")
+
+    return str(text)
+
+# UNUSED
 def regex_loi(input_series: pd.Series) -> pd.Series:
     """
     Finds the law patterns that match a given token.
