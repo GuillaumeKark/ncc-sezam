@@ -7,6 +7,24 @@ import re
 from stopwords import stopwords_nltk, stopwords_specific
 
 
+def preprocess_string(input_string):
+    """
+    Wraps all operations to ensure common normalization.
+    """
+    processed_string = input_string.lower()
+    processed_string = special_structures(processed_string)
+    processed_string = remove_stopwords(processed_string)
+    processed_string = replace_digit(processed_string)
+    processed_string = remove_trailings(processed_string)
+
+    return processed_string
+
+
+"""#############"""
+"""Sub-functions"""
+"""#############"""
+
+
 def remove_stopwords(input_string):
     """
     This function removes stopwords from an input string.
