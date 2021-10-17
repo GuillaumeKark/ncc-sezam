@@ -18,7 +18,7 @@ def preprocess_string(nlp, input_string):
     processed_string = replace_digit(processed_string)
     processed_string = remove_trailings(processed_string)
     processed_string = strip_accents(processed_string)
-    processed_string = lemmatize(nlp, processed_string)
+    #processed_string = lemmatize(nlp, processed_string)
     return processed_string
 
 

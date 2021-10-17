@@ -54,7 +54,7 @@ def predict():
     
     # Save an output table
     output_dataset = pd.concat([corpus, found_title], axis=1)
-    output_dataset.to_parquet("C:/Users/karkl/Desktop/NCC/datasets/output.parquet")
+    output_dataset.to_parquet("C:/Users/karkl/Desktop/NCC/datasets/output3.parquet")
     
 if __name__ == "__main__":
     point_predict()
